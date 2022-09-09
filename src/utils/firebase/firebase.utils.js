@@ -5,6 +5,7 @@ import {
     signInWithRedirect,
     signInWithPopup,
     GoogleAuthProvider,
+    createUserWithEmailAndPassword,
     signOut,
 } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
@@ -32,22 +33,23 @@ provider.setCustomParameters({
     propmt: 'select_account',
 })
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, aditionalInformation = {}) => {
     const userRef = doc(db, 'users', userAuth.uid)
     console.log(userRef)
     const userSnapshot = await getDoc(userRef)
     console.log(userSnapshot)
     console.log(userSnapshot.exists())
 
-    if(!userSnapshot.exists()){
-        const {displayName, email} = userAuth
-        const createdAt =  new Date()
+    if (!userSnapshot.exists()) {
+        const { displayName, email } = userAuth
+        const createdAt = new Date()
 
         try {
-            const algo = await setDoc(userRef,{
+            const algo = await setDoc(userRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...aditionalInformation
             })
             console.log(algo)
         } catch (error) {
@@ -55,31 +57,24 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         }
     }
     return userRef
-}   
+}
+
+export const createAuthUserWithEmailAndPassword = async ({
+    email,
+    password,
+}) => {
+    if (!email || !password) return
+
+    return await createUserWithEmailAndPassword(auth, email, password)
+}
+
 export const auth = getAuth()
 export const signinWithGooglePopup = () => signInWithPopup(auth, provider)
+export const siginWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 /*import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
 
 const auth = getAuth();
-signInWithPopup(auth, provider)
-    .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-    }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-    });
 
 const signInWithPopup2 = async () => {
     try {
