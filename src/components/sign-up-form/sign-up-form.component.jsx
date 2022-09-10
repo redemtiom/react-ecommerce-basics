@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState} from 'react'
 
 import {
     createAuthUserWithEmailAndPassword,
@@ -40,7 +40,6 @@ const SignUpForm = () => {
             const { user } = await createAuthUserWithEmailAndPassword(
                 formFields
             )
-
             await createUserDocumentFromAuth(user, { displayName })
             resetFormFields()
         } catch (error) {
