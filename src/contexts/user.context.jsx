@@ -12,7 +12,7 @@ export const UserProvider = ({children}) => {
 
     useEffect(()=>{
         const unsuscribe = onAuthStateChangedListener((user)=>{
-            if(user) {createUserDocumentFromAuth(user)}
+            if(user) {createUserDocumentFromAuth(user)} 
             setCurrenUser(user)
         })
         return unsuscribe
