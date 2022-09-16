@@ -37,10 +37,10 @@ provider.setCustomParameters({
 
 export const createUserDocumentFromAuth = async (userAuth, aditionalInformation = {}) => {
     const userRef = doc(db, 'users', userAuth.uid)
-    console.log(userRef)
+    // console.log(userRef)
     const userSnapshot = await getDoc(userRef)
-    console.log(userSnapshot)
-    console.log(userSnapshot.exists())
+    // console.log(userSnapshot)
+    // console.log(userSnapshot.exists())
 
     if (!userSnapshot.exists()) {
         const { displayName, email } = userAuth
