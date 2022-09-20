@@ -4,7 +4,7 @@
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component'
 import SignInForm from '../../components/sign-in-form/sign-in-form.component'
 
-import './authentication.styles.scss'
+import {AuthenticationContainer} from './authentication.styles'
 
 const Authentication = () => {
     //* This is an example of google Redirect
@@ -19,7 +19,7 @@ const Authentication = () => {
     // }, [])
 
     return (
-        <div className='authentication-container'>
+        <AuthenticationContainer>
             {/* <button onClick={logGoogleUser}>Sign in with google popup</button> */}
             {//* Button example of google redirect
             /* <button onClick={siginWithGoogleRedirect}>
@@ -27,7 +27,7 @@ const Authentication = () => {
             </button> */}
             <SignInForm/>
             <SignUpForm/>
-        </div>
+        </AuthenticationContainer>
     )
 }
 
