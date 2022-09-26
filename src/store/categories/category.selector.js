@@ -20,6 +20,11 @@ export const selectCategoriesMap = createSelector(
         }, {})
 )
 
+export const selectCategoriesIsLoading = createSelector(
+    [selectCategoryReducer],
+    (categoriesSlice) => categoriesSlice.isLoading
+)
+
 //* Original redux selector without memorized
 // export const selectCategoriesMap = (state) => {
 //     console.log('selector fired')
