@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import {
     signInWithGoogleEmailAndPassword,
-    signinWithGooglePopup,
-    createUserDocumentFromAuth,
+    //signinWithGooglePopup,
+    // createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils'
+
+import { googleSignInStart } from '../../store/user/user.action'
 
 import FormInput from '../form-input/form-input.component'
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component'
@@ -28,9 +30,7 @@ const SignInForm = () => {
         setFormFields(defaultFormFields)
     }
 
-    const signInWithGoogle = async () => {
-        await signinWithGooglePopup()
-    }
+    const signInWithGoogle = () => { googleSignInStart() }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
