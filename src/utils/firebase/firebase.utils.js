@@ -69,10 +69,10 @@ export const createUserDocumentFromAuth = async (
     return userSnapshot
 }
 
-export const createAuthUserWithEmailAndPassword = async ({
+export const createAuthUserWithEmailAndPassword = async (
     email,
     password,
-}) => {
+) => {
     if (!email || !password) return
 
     return await createUserWithEmailAndPassword(auth, email, password)
@@ -105,7 +105,7 @@ export const getCategoriesAndDocuments = async () => {
 export const auth = getAuth()
 export const signinWithGooglePopup = () => signInWithPopup(auth, provider)
 export const siginWithGoogleRedirect = () => signInWithRedirect(auth, provider)
-export const signInWithGoogleEmailAndPassword = async ({ email, password }) => {
+export const signInWithGoogleEmailAndPassword = async (email, password) => {
     if (!email || !password) return
     return await signInWithEmailAndPassword(auth, email, password)
 }
