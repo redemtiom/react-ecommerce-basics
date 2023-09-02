@@ -1,9 +1,5 @@
-import { createAction } from "../../utils/reducers/reducer.utils"
-import { CART_ACTION_TYPES } from "./cart.types"
+import { createSlice } from "@reduxjs/toolkit"
 
-export const setCartItems = (cartItems) => createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems)
-
-export const setCartShow = (boolean) => createAction(CART_ACTION_TYPES.SET_CART_SHOW, boolean)
 
 const addCartItem = (cartItems, productToAdd) => {
     const existingCartItem = cartItems.find(
@@ -40,16 +36,32 @@ const deleteCartItem = (cartItems, productToDelete) => {
     return cartItems.filter((item) => item.id !== productToDelete.id)
 }
 
-export const addItemToCart = (cartItems, productToAdd) => {
-    const newCartItems = addCartItem(cartItems, productToAdd)
-    return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems)
-}
-export const removeItemFromCart = (cartItems, productToRemove) => {
-    const newCartItems = removeCartItem(cartItems, productToRemove)
-    return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems)
+const INITIAL_STATE = {
+    cartShow: false,
+    cartItems: [],
 }
 
-export const deleteItemFromCart = (cartItems, productToDelete) => {
-    const newCartItems = deleteCartItem(cartItems, productToDelete)
-    return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems)
-}
+export const cartSlice = createSlice({
+    name: 'cart',
+    initialState: INITIAL_STATE,
+    reducers: {
+        setCartShow(state, action) {
+            state.cartShow = action.payload
+        },
+        setCartItems(state, action) {
+            state.cartItems = action.payload
+        },
+        addItemToCart(state, action) {
+            state.cartItems = addCartItem(state.cartItems, action.payload)
+        },
+        removeItemFromCart(state, action) {
+            state.cartItems = removeCartItem(state.cartItems, action.payload)
+        },
+        deleteItemFromCart(state, action) {
+            state.cartItems = deleteCartItem(state.cartItems, action.payload)
+        }
+    },
+})
+
+export const { setCartItems, setCartShow, addItemToCart, removeItemFromCart, deleteItemFromCart } = cartSlice.actions;
+export const cartReducer = cartSlice.reducer;

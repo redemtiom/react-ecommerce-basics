@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 import { selectCartCount, selectCartShow } from '../../store/cart/cart.selector'
-import { setCartShow } from '../../store/cart/cart.action'
+import { setCartShow } from '../../store/cart/cart.slice'
 
 import {
     CartIconContainer,
